@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InvalidMathArgumentException;
 use App\Http\Requests\GetFibonacciRequest;
 use App\Http\Requests\GetIsPrimeRequest;
-use InvalidArgumentException;
 
 class MathController extends Controller
 {
@@ -14,7 +14,7 @@ class MathController extends Controller
 
         try {
             $result['result'] = $request->resolve();
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidMathArgumentException $e) {
             $result['error'] = $e->getMessage();
         } catch (\Exception $e) {
             $result['error'] = 'Something went wrong :(';
@@ -29,7 +29,7 @@ class MathController extends Controller
 
         try {
             $result['result'] = $request->resolve();
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidMathArgumentException $e) {
             $result['error'] = $e->getMessage();
         } catch (\Exception $e) {
             $result['error'] = 'Something went wrong :(';

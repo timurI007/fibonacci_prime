@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Exceptions\InvalidArgumentException;
+use App\Exceptions\InvalidMathArgumentException;
 
 class MathService
 {
     public function fibonacci(int $position): int
     {
         if ($position < 0) {
-            return new InvalidArgumentException();
+            return new InvalidMathArgumentException();
         }
 
         if ($position < 2) {
@@ -27,7 +27,7 @@ class MathService
     public function isPrime(int $number): bool
     {
         if ($number < 0) {
-            return new InvalidArgumentException();
+            return new InvalidMathArgumentException();
         }
 
         if ($number < 2) {
