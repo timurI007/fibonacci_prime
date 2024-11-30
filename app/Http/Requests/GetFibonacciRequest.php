@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Services\MathService;
+use App\DataTransferObjects\Math\FibonacciDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GetFibonacciRequest extends FormRequest
@@ -27,10 +27,8 @@ class GetFibonacciRequest extends FormRequest
         ];
     }
 
-    public function resolve(): int
+    public function toDTO(): FibonacciDTO
     {
-        $math = new MathService();
-
-        return $math->fibonacci($this->input('position'));
+        return new FibonacciDTO($this->validated()['position']);
     }
 }

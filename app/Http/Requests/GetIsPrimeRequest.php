@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\DataTransferObjects\Math\PrimeDTO;
 use App\Services\MathService;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,10 +28,8 @@ class GetIsPrimeRequest extends FormRequest
         ];
     }
 
-    public function resolve(): bool
+    public function toDTO(): PrimeDTO
     {
-        $math = new MathService();
-
-        return $math->isPrime($this->input('number'));
+        return new PrimeDTO($this->validated()['number']);
     }
 }
