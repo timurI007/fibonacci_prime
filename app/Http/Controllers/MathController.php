@@ -2,42 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\InvalidMathArgumentException;
+use App\DataTransferObjects\Math\FibonacciDTO;
+use App\DataTransferObjects\Math\MathResponseDTO;
+use App\DataTransferObjects\Math\PrimeDTO;
 use App\Http\Requests\GetFibonacciRequest;
 use App\Http\Requests\GetIsPrimeRequest;
+use App\Http\Resources\MathResultResource;
 use App\Services\MathService;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class MathController extends Controller
 {
-    public function fibonacci(GetFibonacciRequest $request, MathService $math)
+    public function __construct(
+        private MathService $math
+    ) {}
+
+    public function fibonacci(GetFibonacciRequest $request): JsonResource
     {
-        $result = [];
-        $fibonacciDTO = $request->toDTO();
+        $fibonacciDTO = FibonacciDTO::fromRequest($request);
 
-        try {
-            $result['result'] = $math->fibonacci($fibonacciDTO->position);
-        } catch (InvalidMathArgumentException $e) {
-            $result['error'] = $e->getMessage();
-        } catch (\Exception $e) {
-            $result['error'] = 'Something went wrong :(';
-        }
+        $response = new MathResponseDTO(
+            result: $this->math->fibonacci($fibonacciDTO->position)
+        );
 
-        return response()->json($result);
+        return new MathResultResource($response);
     }
 
-    public function isPrime(GetIsPrimeRequest $request, MathService $math)
+    public function isPrime(GetIsPrimeRequest $request): JsonResource
     {
-        $result = [];
-        $primeDTO = $request->toDTO();
+        $primeDTO = PrimeDTO::fromRequest($request);
 
-        try {
-            $result['result'] = $math->isPrime($primeDTO->number);
-        } catch (InvalidMathArgumentException $e) {
-            $result['error'] = $e->getMessage();
-        } catch (\Exception $e) {
-            $result['error'] = 'Something went wrong :(';
-        }
+        $response = new MathResponseDTO(
+            result: $this->math->isPrime($primeDTO->number)
+        );
 
-        return response()->json($result);
+        return new MathResultResource($response);
     }
 }

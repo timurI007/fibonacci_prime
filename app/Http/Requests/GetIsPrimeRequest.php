@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\DataTransferObjects\Math\PrimeDTO;
-use App\Services\MathService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GetIsPrimeRequest extends FormRequest
@@ -26,10 +24,5 @@ class GetIsPrimeRequest extends FormRequest
         return [
             'number' => ['required', 'integer']
         ];
-    }
-
-    public function toDTO(): PrimeDTO
-    {
-        return new PrimeDTO($this->validated()['number']);
     }
 }

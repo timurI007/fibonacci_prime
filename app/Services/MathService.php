@@ -9,7 +9,7 @@ class MathService
     public function fibonacci(int $position): int
     {
         if ($position < 0) {
-            return new InvalidMathArgumentException();
+            throw new InvalidMathArgumentException("Position must be greater than 0");
         }
 
         if ($position < 2) {
@@ -27,7 +27,7 @@ class MathService
     public function isPrime(int $number): bool
     {
         if ($number < 0) {
-            return new InvalidMathArgumentException();
+            throw new InvalidMathArgumentException("Number must be greater than 0");
         }
 
         if ($number < 2) {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\DataTransferObjects\Math\FibonacciDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GetFibonacciRequest extends FormRequest
@@ -25,10 +24,5 @@ class GetFibonacciRequest extends FormRequest
         return [
             'position' => ['required', 'integer']
         ];
-    }
-
-    public function toDTO(): FibonacciDTO
-    {
-        return new FibonacciDTO($this->validated()['position']);
     }
 }
